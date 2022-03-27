@@ -1,7 +1,6 @@
-import BaseError from '../../errors/baseError';
+import InvalidAttributeError from '../../errors/invalidAttributeError';
 import Email from '../../valueObjects/email/email';
 import Password from './password';
-import UserData from './userData';
 import Username from './username';
 
 class User {
@@ -37,38 +36,46 @@ class User {
     this.updatedAt = updatedAt || new Date();
   }
 
-  static create(userData: UserData): User | BaseError {
-    const emailOrError = Email.create(userData.email);
-    const usernameOrError = Username.create(userData.username);
+  static create(
+    username: string,
+    email: string,
+    password?: string,
+    passwordHashed?: string,
+    id?: string,
+    createdAt?: Date,
+    updatedAt?: Date,
+  ): User | InvalidAttributeError {
+    const emailOrError = Email.create(email);
+    const usernameOrError = Username.create(username);
 
-    if (emailOrError instanceof BaseError) {
+    if (emailOrError instanceof Error) {
       return emailOrError;
     }
 
-    if (usernameOrError instanceof BaseError) {
+    if (usernameOrError instanceof Error) {
       return usernameOrError;
     }
 
-    let password: Password | null = null;
+    let passwordObject: Password | null = null;
 
-    if (userData.password) {
-      const passwordOrError = Password.create(userData.password);
+    if (password) {
+      const passwordOrError = Password.create(password);
 
-      if (passwordOrError instanceof BaseError) {
+      if (passwordOrError instanceof Error) {
         return passwordOrError;
       }
 
-      password = passwordOrError;
+      passwordObject = passwordOrError;
     }
 
     return new User(
       usernameOrError,
       emailOrError,
-      password,
-      userData.passwordHashed,
-      userData.id,
-      userData.createdAt,
-      userData.updatedAt,
+      passwordObject,
+      passwordHashed,
+      id,
+      createdAt,
+      updatedAt,
     );
   }
 }

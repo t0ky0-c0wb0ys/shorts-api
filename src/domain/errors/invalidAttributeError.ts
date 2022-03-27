@@ -1,6 +1,4 @@
-import BaseError from './baseError';
-
-class InvalidAttributeError extends BaseError {
+class InvalidAttributeError extends Error {
   constructor(attribute: string) {
     super(`Invalid ${attribute}`);
   }
