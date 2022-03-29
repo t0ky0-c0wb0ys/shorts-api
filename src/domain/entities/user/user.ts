@@ -12,7 +12,7 @@ class User {
 
   public readonly password: Password | null;
 
-  public readonly passwordHashed: string | null;
+  public readonly hashedPassword: string | null;
 
   public readonly createdAt: Date;
 
@@ -22,7 +22,7 @@ class User {
     username: Username,
     email: Email,
     password?: Password | null,
-    passwordHashed?: string,
+    hashedPassword?: string,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
@@ -31,7 +31,7 @@ class User {
     this.username = username;
     this.email = email;
     this.password = password || null;
-    this.passwordHashed = passwordHashed || null;
+    this.hashedPassword = hashedPassword || null;
     this.createdAt = createdAt || new Date();
     this.updatedAt = updatedAt || new Date();
   }
@@ -40,7 +40,7 @@ class User {
     username: string,
     email: string,
     password?: string,
-    passwordHashed?: string,
+    hashedPassword?: string,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
@@ -72,7 +72,7 @@ class User {
       usernameOrError,
       emailOrError,
       passwordObject,
-      passwordHashed,
+      hashedPassword,
       id,
       createdAt,
       updatedAt,
