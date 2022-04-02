@@ -6,9 +6,9 @@ import { IUserRepository } from '../../repositories/userRepository';
 import { IHashService } from '../../services/hashService';
 
 class RegisterUser {
-  public readonly userRepository: IUserRepository;
+  private readonly userRepository: IUserRepository;
 
-  public readonly hashService: IHashService;
+  private readonly hashService: IHashService;
 
   constructor(userRepository: IUserRepository, hashService: IHashService) {
     this.userRepository = userRepository;

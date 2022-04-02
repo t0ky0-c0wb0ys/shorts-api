@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build",
     "start:dev": "ts-node-dev --transpile-only src/infra/rest",
-    "test": "jest",
+    "test": "jest --watch",
     "lint:fix": "npx eslint \"**/*.{ts,tsx}\" --fix",
     "build": "tsc"
   },
