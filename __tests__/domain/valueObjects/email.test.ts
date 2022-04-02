@@ -1,5 +1,7 @@
 import faker from '@faker-js/faker';
 import Email from '../../../src/domain/valueObjects/email/email';
+import InvalidEmailError from '../../../src/domain/errors/invalidEmailError';
+import MaxLengthEmailError from '../../../src/domain/errors/maxLengthEmailError';
 
 describe('Email entity', () => {
   it('should not create a email with too much chars', () => {
@@ -9,7 +11,8 @@ describe('Email entity', () => {
 
     const error = Email.create(params.email) as Error;
 
-    expect(error.message).toBe('Invalid email');
+    expect(error).toBeInstanceOf(MaxLengthEmailError);
+    expect(error.message).toBe(new MaxLengthEmailError().message);
   });
 
   it('should not create a email without the format of an email', () => {
@@ -19,7 +22,8 @@ describe('Email entity', () => {
 
     const error = Email.create(params.email) as Error;
 
-    expect(error.message).toBe('Invalid email');
+    expect(error).toBeInstanceOf(InvalidEmailError);
+    expect(error.message).toBe(new InvalidEmailError().message);
   });
 
   it('should create a email', () => {

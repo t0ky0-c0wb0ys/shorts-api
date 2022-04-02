@@ -1,4 +1,7 @@
-import InvalidAttributeError from '../../errors/invalidAttributeError';
+import MaxLengthEmailError from '../../errors/maxLengthEmailError';
+import InvalidEmailError from '../../errors/invalidEmailError';
+import UsernameCantContainWhitespaceError from '../../errors/usernameCantContainWhitespaceError';
+import MinLengthPasswordError from '../../errors/minLengthPasswordError';
 import Email from '../../valueObjects/email/email';
 import Password from './password';
 import Username from './username';
@@ -44,7 +47,12 @@ class User {
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
-  ): User | InvalidAttributeError {
+  ):
+    | User
+    | MinLengthPasswordError
+    | UsernameCantContainWhitespaceError
+    | InvalidEmailError
+    | MaxLengthEmailError {
     const emailOrError = Email.create(email);
     const usernameOrError = Username.create(username);
 

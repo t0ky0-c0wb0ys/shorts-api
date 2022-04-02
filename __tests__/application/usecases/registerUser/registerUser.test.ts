@@ -6,7 +6,6 @@ import RegisterUser from '../../../../src/application/usecases/registerUser/regi
 import User from '../../../../src/domain/entities/user/user';
 import AlreadyExistsError from '../../../../src/application/errors/alreadyExistsError';
 import createUserFactory from '../../../factories/createUserFactory';
-import InvalidAttributeError from '../../../../src/domain/errors/invalidAttributeError';
 
 describe('Register User Usecase', () => {
   beforeEach(() => {
@@ -28,13 +27,13 @@ describe('Register User Usecase', () => {
     };
     jest
       .spyOn(User, 'create')
-      .mockImplementation(() => new InvalidAttributeError('username'));
+      .mockImplementation(() => new Error('Invalid user'));
 
     const registerUser = new RegisterUser(userRepository, hashService);
     const response = (await registerUser.run(params)) as Error;
 
-    expect(response).toBeInstanceOf(InvalidAttributeError);
-    expect(response.message).toBe('Invalid username');
+    expect(response).toBeInstanceOf(Error);
+    expect(response.message).toBe('Invalid user');
   });
 
   it('should not register when user already exists', async () => {

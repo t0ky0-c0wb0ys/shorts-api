@@ -1,4 +1,4 @@
-import MinLengthPasswordError from '../../errors/MinLengthPasswordError';
+import MinLengthPasswordError from '../../errors/minLengthPasswordError';
 
 class Password {
   public readonly password: string;

@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 import Password from '../../../../src/domain/entities/user/password';
-import MinLengthPasswordError from '../../../../src/domain/errors/MinLengthPasswordError';
+import MinLengthPasswordError from '../../../../src/domain/errors/minLengthPasswordError';
 
 describe('User entity', () => {
   it('should not create a password with too few chars', () => {

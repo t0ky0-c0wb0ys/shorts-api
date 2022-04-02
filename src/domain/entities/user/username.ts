@@ -1,4 +1,4 @@
-import UsernameCantContainWhitespaceError from '../../errors/UsernameCantContainWhitespaceError';
+import UsernameCantContainWhitespaceError from '../../errors/usernameCantContainWhitespaceError';
 
 class Username {
   public readonly username: string;

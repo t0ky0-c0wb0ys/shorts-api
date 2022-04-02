@@ -1,4 +1,5 @@
-import InvalidAttributeError from '../../errors/invalidAttributeError';
+import MaxLengthEmailError from '../../errors/maxLengthEmailError';
+import InvalidEmailError from '../../errors/invalidEmailError';
 
 class Email {
   public readonly email: string;
@@ -7,26 +8,32 @@ class Email {
     this.email = email;
   }
 
-  static isValid(email: string): boolean {
+  static isValid(
+    email: string,
+  ): MaxLengthEmailError | InvalidEmailError | boolean {
     const MAX_EMAIL_LENGTH = 255;
 
     if (!email || email.trim().length > MAX_EMAIL_LENGTH) {
-      return false;
+      return new MaxLengthEmailError();
     }
 
     const VALID_EMAIL_REGEX =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!VALID_EMAIL_REGEX.test(email)) {
-      return false;
+      return new InvalidEmailError();
     }
 
     return true;
   }
 
-  static create(email: string): InvalidAttributeError | Email {
-    if (!this.isValid(email)) {
-      return new InvalidAttributeError('email');
+  static create(
+    email: string,
+  ): MaxLengthEmailError | InvalidEmailError | Email {
+    const validOrError = this.isValid(email);
+
+    if (validOrError instanceof Error) {
+      return validOrError;
     }
 
     return new Email(email);

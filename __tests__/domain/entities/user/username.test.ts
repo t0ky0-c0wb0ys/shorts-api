@@ -1,5 +1,5 @@
 import faker from '@faker-js/faker';
-import UsernameCantContainWhitespaceError from '../../../../src/domain/errors/UsernameCantContainWhitespaceError';
+import UsernameCantContainWhitespaceError from '../../../../src/domain/errors/usernameCantContainWhitespaceError';
 import Username from '../../../../src/domain/entities/user/username';
 
 describe('Username entity', () => {
