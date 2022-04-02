@@ -1,4 +1,5 @@
 import faker from '@faker-js/faker';
+import MinLengthPasswordError from '../../../../src/domain/errors/MinLengthPasswordError';
 import User from '../../../../src/domain/entities/user/user';
 
 describe('User entity', () => {
@@ -37,7 +38,7 @@ describe('User entity', () => {
       params.password,
     ) as Error;
 
-    expect(error.message).toBe('Invalid password');
+    expect(error.message).toBe(new MinLengthPasswordError().message);
   });
 
   it('should create a user with a valid password', () => {

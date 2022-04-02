@@ -1,4 +1,4 @@
-import InvalidAttributeError from '../../errors/invalidAttributeError';
+import MinLengthPasswordError from '../../errors/MinLengthPasswordError';
 
 class Password {
   public readonly password: string;
@@ -7,19 +7,21 @@ class Password {
     this.password = password;
   }
 
-  static isValid(password: string): boolean {
+  static isValid(password: string): boolean | MinLengthPasswordError {
     const MIN_PASSWORD_LENGTH = 8;
 
     if (password.length < MIN_PASSWORD_LENGTH) {
-      return false;
+      return new MinLengthPasswordError();
     }
 
     return true;
   }
 
-  static create(password: string): InvalidAttributeError | Password {
-    if (!this.isValid(password)) {
-      return new InvalidAttributeError('password');
+  static create(password: string): MinLengthPasswordError | Password {
+    const validOrError = this.isValid(password);
+
+    if (validOrError instanceof Error) {
+      return validOrError;
     }
 
     return new Password(password);
