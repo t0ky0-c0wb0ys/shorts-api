@@ -10,6 +10,7 @@ describe('User entity', () => {
 
     const error = Password.create(params.password) as Error;
 
+    expect(error).toBeInstanceOf(MinLengthPasswordError);
     expect(error.message).toBe(new MinLengthPasswordError().message);
   });
 

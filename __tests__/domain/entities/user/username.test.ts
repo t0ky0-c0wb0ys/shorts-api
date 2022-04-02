@@ -1,4 +1,5 @@
 import faker from '@faker-js/faker';
+import UsernameCantContainWhitespaceError from '../../../../src/domain/errors/UsernameCantContainWhitespaceError';
 import Username from '../../../../src/domain/entities/user/username';
 
 describe('Username entity', () => {
@@ -9,7 +10,10 @@ describe('Username entity', () => {
 
     const error = Username.create(params.username) as Error;
 
-    expect(error.message).toBe('Invalid username');
+    expect(error).toBeInstanceOf(UsernameCantContainWhitespaceError);
+    expect(error.message).toBe(
+      new UsernameCantContainWhitespaceError().message,
+    );
   });
 
   it('should create a username', () => {

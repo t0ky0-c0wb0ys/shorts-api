@@ -1,4 +1,4 @@
-import InvalidAttributeError from '../../errors/invalidAttributeError';
+import UsernameCantContainWhitespaceError from '../../errors/UsernameCantContainWhitespaceError';
 
 class Username {
   public readonly username: string;
@@ -7,9 +7,11 @@ class Username {
     this.username = username;
   }
 
-  static isValid(username: string): boolean {
+  static isValid(
+    username: string,
+  ): boolean | UsernameCantContainWhitespaceError {
     if (this.includesWhitespace(username)) {
-      return false;
+      return new UsernameCantContainWhitespaceError();
     }
 
     return true;
@@ -19,9 +21,13 @@ class Username {
     return username.includes(' ');
   }
 
-  static create(username: string): InvalidAttributeError | Username {
-    if (!this.isValid(username)) {
-      return new InvalidAttributeError('username');
+  static create(
+    username: string,
+  ): UsernameCantContainWhitespaceError | Username {
+    const validOrError = this.isValid(username);
+
+    if (validOrError instanceof Error) {
+      return validOrError;
     }
 
     return new Username(username);

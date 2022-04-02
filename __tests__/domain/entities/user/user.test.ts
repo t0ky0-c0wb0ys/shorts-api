@@ -1,17 +1,25 @@
 import faker from '@faker-js/faker';
-import MinLengthPasswordError from '../../../../src/domain/errors/MinLengthPasswordError';
+import Email from '../../../../src/domain/valueObjects/email/email';
 import User from '../../../../src/domain/entities/user/user';
+import Username from '../../../../src/domain/entities/user/username';
+import Password from '../../../../src/domain/entities/user/password';
 
 describe('User entity', () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should not create a user with an invalid email', () => {
     const params = {
       username: faker.internet.userName(),
       email: 'invalidEmail',
     };
+    jest.spyOn(Email, 'create').mockReturnValue(new Error('Email error'));
+    jest.spyOn(Username, 'create').mockReturnValue(new Error('Username error'));
 
     const error = User.create(params.username, params.email) as Error;
 
-    expect(error.message).toBe('Invalid email');
+    expect(error.message).toBe('Email error');
   });
 
   it('should not create a user with an invalid username', () => {
@@ -19,10 +27,12 @@ describe('User entity', () => {
       username: `${faker.internet.userName()}  `,
       email: faker.internet.email(),
     };
+    jest.spyOn(Email, 'create').mockReturnValue(Email.create(params.email));
+    jest.spyOn(Username, 'create').mockReturnValue(new Error('Username error'));
 
     const error = User.create(params.username, params.email) as Error;
 
-    expect(error.message).toBe('Invalid username');
+    expect(error.message).toBe('Username error');
   });
 
   it('should not create a user with an invalid password', () => {
@@ -31,6 +41,11 @@ describe('User entity', () => {
       email: faker.internet.email(),
       password: faker.internet.password(3),
     };
+    jest.spyOn(Email, 'create').mockReturnValue(Email.create(params.email));
+    jest
+      .spyOn(Username, 'create')
+      .mockReturnValue(Username.create(params.username));
+    jest.spyOn(Password, 'create').mockReturnValue(new Error('Password error'));
 
     const error = User.create(
       params.username,
@@ -38,7 +53,7 @@ describe('User entity', () => {
       params.password,
     ) as Error;
 
-    expect(error.message).toBe(new MinLengthPasswordError().message);
+    expect(error.message).toBe('Password error');
   });
 
   it('should create a user with a valid password', () => {
@@ -47,6 +62,13 @@ describe('User entity', () => {
       email: faker.internet.email(),
       password: faker.internet.password(8),
     };
+    jest.spyOn(Email, 'create').mockReturnValue(Email.create(params.email));
+    jest
+      .spyOn(Username, 'create')
+      .mockReturnValue(Username.create(params.username));
+    jest
+      .spyOn(Password, 'create')
+      .mockReturnValue(Password.create(params.password));
 
     const user = User.create(
       params.username,
