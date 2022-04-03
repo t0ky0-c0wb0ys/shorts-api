@@ -5,7 +5,7 @@ import { RegisterUserResponse } from './registerUserResponse';
 import { IUserRepository } from '../../repositories/userRepository';
 import { IHashService } from '../../services/hashService';
 
-class RegisterUser {
+class RegisterUserUsecase {
   private readonly userRepository: IUserRepository;
 
   private readonly hashService: IHashService;
@@ -35,6 +35,7 @@ class RegisterUser {
     const hashedPassword = await this.hashService.hashPassword(password);
 
     const user = await this.userRepository.create(
+      userOrError.id,
       username,
       email,
       hashedPassword,
@@ -46,4 +47,4 @@ class RegisterUser {
   }
 }
 
-export default RegisterUser;
+export default RegisterUserUsecase;

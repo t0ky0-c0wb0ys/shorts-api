@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 import { RegisterUserRequest } from '../../../../src/application/usecases/registerUser/registerUserRequest';
 import { IHashService } from '../../../../src/application/services/hashService';
 import { IUserRepository } from '../../../../src/application/repositories/userRepository';
-import RegisterUser from '../../../../src/application/usecases/registerUser/registerUser';
+import RegisterUserUsecase from '../../../../src/application/usecases/registerUser/registerUser';
 import User from '../../../../src/domain/entities/user/user';
 import AlreadyExistsError from '../../../../src/application/errors/alreadyExistsError';
 import createUserFactory from '../../../factories/createUserFactory';
@@ -29,7 +29,7 @@ describe('Register User Usecase', () => {
       .spyOn(User, 'create')
       .mockImplementation(() => new Error('Invalid user'));
 
-    const registerUser = new RegisterUser(userRepository, hashService);
+    const registerUser = new RegisterUserUsecase(userRepository, hashService);
     const response = (await registerUser.run(params)) as Error;
 
     expect(response).toBeInstanceOf(Error);
@@ -52,7 +52,7 @@ describe('Register User Usecase', () => {
     };
     jest.spyOn(User, 'create').mockImplementation(() => user);
 
-    const registerUser = new RegisterUser(userRepository, hashService);
+    const registerUser = new RegisterUserUsecase(userRepository, hashService);
     const response = (await registerUser.run(params)) as Error;
 
     expect(response).toBeInstanceOf(AlreadyExistsError);
@@ -76,12 +76,13 @@ describe('Register User Usecase', () => {
     };
     jest.spyOn(User, 'create').mockImplementation(() => user);
 
-    const registerUser = new RegisterUser(userRepository, hashService);
+    const registerUser = new RegisterUserUsecase(userRepository, hashService);
     const response = (await registerUser.run(params)) as Error;
 
     expect(response).toBe(user);
     expect(userRepository.findByEmail).toHaveBeenCalledWith(params.email);
     expect(userRepository.create).toHaveBeenCalledWith(
+      user.id,
       params.username,
       params.email,
       hashedPassword,

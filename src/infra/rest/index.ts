@@ -8,7 +8,10 @@ const opts: RouteShorthandOptions = {
       200: {
         type: 'object',
         properties: {
-          pong: {
+          username: {
+            type: 'string',
+          },
+          email: {
             type: 'string',
           },
         },
@@ -17,8 +20,8 @@ const opts: RouteShorthandOptions = {
   },
 };
 
-server.get('/ping', opts, async (request, reply) => {
-  return { pong: 'it worked!' };
+server.get('/register', opts, async (request, reply) => {
+  return reply.send({ username: 'test' });
 });
 
 const start = async () => {

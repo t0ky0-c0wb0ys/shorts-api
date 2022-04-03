@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import MaxLengthEmailError from '../../errors/maxLengthEmailError';
 import InvalidEmailError from '../../errors/invalidEmailError';
 import UsernameCantContainWhitespaceError from '../../errors/usernameCantContainWhitespaceError';
@@ -7,7 +8,7 @@ import Password from './password';
 import Username from './username';
 
 class User {
-  public readonly id: string | null;
+  public readonly id: string;
 
   public readonly username: Username;
 
@@ -30,7 +31,7 @@ class User {
     createdAt?: Date,
     updatedAt?: Date,
   ) {
-    this.id = id || null;
+    this.id = id || randomUUID();
     this.username = username;
     this.email = email;
     this.password = password || null;
