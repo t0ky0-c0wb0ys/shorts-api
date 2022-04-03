@@ -5,14 +5,13 @@ import PrismaUserRepository from '../../../infra/repositories/prisma/prismaUserR
 import { IHashService } from '../../../application/services/hashService';
 import { IUserRepository } from '../../../application/repositories/userRepository';
 import RegisterUserUsecase from '../../../application/usecases/registerUser/registerUser';
+import HashService from '../../../infra/services/hashService';
 
 class RegisterUserController {
   async handle(body: any): Promise<HttpResponse> {
     try {
       const userRepository: IUserRepository = new PrismaUserRepository();
-      const hashService: IHashService = {
-        hashPassword: async password => password,
-      };
+      const hashService: IHashService = new HashService();
 
       const registerUserUsecase = new RegisterUserUsecase(
         userRepository,
