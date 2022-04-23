@@ -21,6 +21,7 @@
     "prettier/prettier": "error",
     "no-use-before-define": "off",
     "class-methods-use-this": "off",
+    "dot-notation": "off",
     "@typescript-eslint/no-use-before-define": [
       "error"
     ],
