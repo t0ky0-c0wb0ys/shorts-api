@@ -1,5 +1,6 @@
 import MaxLengthEmailError from '../../errors/maxLengthEmailError';
 import InvalidEmailError from '../../errors/invalidEmailError';
+import RequiredPropertyError from '../../errors/requiredProperty';
 
 class Email {
   public readonly email: string;
@@ -10,10 +11,14 @@ class Email {
 
   static isValid(
     email: string,
-  ): MaxLengthEmailError | InvalidEmailError | boolean {
+  ): MaxLengthEmailError | InvalidEmailError | boolean | RequiredPropertyError {
+    if (!email) {
+      return new RequiredPropertyError('email');
+    }
+
     const MAX_EMAIL_LENGTH = 255;
 
-    if (!email || email.trim().length > MAX_EMAIL_LENGTH) {
+    if (email.trim().length > MAX_EMAIL_LENGTH) {
       return new MaxLengthEmailError();
     }
 

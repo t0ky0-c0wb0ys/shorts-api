@@ -1,3 +1,4 @@
+import RequiredPropertyError from '../../errors/requiredProperty';
 import UsernameCantContainWhitespaceError from '../../errors/usernameCantContainWhitespaceError';
 
 class Username {
@@ -9,7 +10,11 @@ class Username {
 
   static isValid(
     username: string,
-  ): boolean | UsernameCantContainWhitespaceError {
+  ): boolean | UsernameCantContainWhitespaceError | RequiredPropertyError {
+    if (!username) {
+      return new RequiredPropertyError('username');
+    }
+
     if (this.includesWhitespace(username)) {
       return new UsernameCantContainWhitespaceError();
     }

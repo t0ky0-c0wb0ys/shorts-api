@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import faker from '@faker-js/faker';
 import Email from '../../../../src/domain/valueObjects/email/email';
 import User from '../../../../src/domain/entities/user/user';
@@ -11,32 +12,43 @@ describe('User entity', () => {
 
   it('should not create a user with an invalid email', () => {
     const params = {
+      id: randomUUID(),
       username: faker.internet.userName(),
       email: 'invalidEmail',
     };
     jest.spyOn(Email, 'create').mockReturnValue(new Error('Email error'));
     jest.spyOn(Username, 'create').mockReturnValue(new Error('Username error'));
 
-    const error = User.create(params.username, params.email) as Error;
+    const error = User.create(
+      params.id,
+      params.username,
+      params.email,
+    ) as Error;
 
     expect(error.message).toBe('Email error');
   });
 
   it('should not create a user with an invalid username', () => {
     const params = {
+      id: randomUUID(),
       username: `${faker.internet.userName()}  `,
       email: faker.internet.email(),
     };
     jest.spyOn(Email, 'create').mockReturnValue(Email.create(params.email));
     jest.spyOn(Username, 'create').mockReturnValue(new Error('Username error'));
 
-    const error = User.create(params.username, params.email) as Error;
+    const error = User.create(
+      params.id,
+      params.username,
+      params.email,
+    ) as Error;
 
     expect(error.message).toBe('Username error');
   });
 
   it('should not create a user with an invalid password', () => {
     const params = {
+      id: randomUUID(),
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(3),
@@ -48,6 +60,7 @@ describe('User entity', () => {
     jest.spyOn(Password, 'create').mockReturnValue(new Error('Password error'));
 
     const error = User.create(
+      params.id,
       params.username,
       params.email,
       params.password,
@@ -58,6 +71,7 @@ describe('User entity', () => {
 
   it('should create a user with a valid password', () => {
     const params = {
+      id: randomUUID(),
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(8),
@@ -71,6 +85,7 @@ describe('User entity', () => {
       .mockReturnValue(Password.create(params.password));
 
     const user = User.create(
+      params.id,
       params.username,
       params.email,
       params.password,

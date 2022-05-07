@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import MaxLengthEmailError from '../../errors/maxLengthEmailError';
 import InvalidEmailError from '../../errors/invalidEmailError';
 import UsernameCantContainWhitespaceError from '../../errors/usernameCantContainWhitespaceError';
@@ -23,15 +22,15 @@ class User {
   public readonly updatedAt: Date;
 
   private constructor(
+    id: string,
     username: Username,
     email: Email,
     password?: Password | null,
     hashedPassword?: string,
-    id?: string,
     createdAt?: Date,
     updatedAt?: Date,
   ) {
-    this.id = id || randomUUID();
+    this.id = id;
     this.username = username;
     this.email = email;
     this.password = password || null;
@@ -41,11 +40,11 @@ class User {
   }
 
   static create(
+    id: string,
     username: string,
     email: string,
     password?: string,
     hashedPassword?: string,
-    id?: string,
     createdAt?: Date,
     updatedAt?: Date,
   ):
@@ -78,11 +77,11 @@ class User {
     }
 
     return new User(
+      id,
       usernameOrError,
       emailOrError,
       passwordObject,
       hashedPassword,
-      id,
       createdAt,
       updatedAt,
     );

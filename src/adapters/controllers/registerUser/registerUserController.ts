@@ -34,7 +34,6 @@ class RegisterUserController {
 
       return new Created(response);
     } catch (error) {
-      console.log(error);
       return new ServerError();
     }
   }

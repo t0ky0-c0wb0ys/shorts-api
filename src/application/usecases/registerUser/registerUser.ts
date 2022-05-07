@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import AlreadyExistsError from '../../errors/alreadyExistsError';
 import User from '../../../domain/entities/user/user';
 import { RegisterUserRequest } from './registerUserRequest';
@@ -20,7 +21,7 @@ class RegisterUserUsecase {
   ): Promise<RegisterUserResponse> {
     const { username, email, password } = request;
 
-    const userOrError = User.create(username, email, password);
+    const userOrError = User.create(randomUUID(), username, email, password);
 
     if (userOrError instanceof Error) {
       return userOrError;

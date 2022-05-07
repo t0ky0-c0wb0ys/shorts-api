@@ -10,11 +10,10 @@ const createUserFactory = (): User => {
     id: randomUUID(),
   };
   return User.create(
+    randomUUID(),
     user.username,
     user.email,
     user.password,
-    '',
-    user.id,
   ) as User;
 };
 
