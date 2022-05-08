@@ -5,7 +5,7 @@ import MinLengthPasswordError from '../../../domain/errors/minLengthPasswordErro
 import InvalidEmailError from '../../../domain/errors/invalidEmailError';
 import MaxLengthEmailError from '../../../domain/errors/maxLengthEmailError';
 
-export type RegisterUserResponse =
+export type RegisterUserOutput =
   | UserDTO
   | AlreadyExistsError
   | UsernameCantContainWhitespaceError

@@ -2,8 +2,8 @@ import { randomUUID } from 'crypto';
 import { UserDTO } from '../dto/user';
 import AlreadyExistsError from '../../errors/alreadyExistsError';
 import User from '../../../domain/entities/user/user';
-import { RegisterUserRequest } from './registerUserRequest';
-import { RegisterUserResponse } from './registerUserResponse';
+import { RegisterUserInput } from './registerUserInput';
+import { RegisterUserOutput } from './registerUserOutput';
 import { IUserRepository } from '../../repositories/userRepository';
 import { IHashService } from '../../services/hashService';
 
@@ -17,9 +17,7 @@ class RegisterUserUsecase {
     this.hashService = hashService;
   }
 
-  public async run(
-    request: RegisterUserRequest,
-  ): Promise<RegisterUserResponse> {
+  public async run(request: RegisterUserInput): Promise<RegisterUserOutput> {
     const { username, email, password } = request;
 
     const userOrError = User.create(randomUUID(), username, email, password);

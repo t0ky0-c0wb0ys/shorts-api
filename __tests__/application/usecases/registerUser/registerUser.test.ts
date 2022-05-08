@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
 import { UserDTO } from '../../../../src/application/usecases/dto/user';
-import { RegisterUserRequest } from '../../../../src/application/usecases/registerUser/registerUserRequest';
+import { RegisterUserInput } from '../../../../src/application/usecases/registerUser/registerUserInput';
 import { IHashService } from '../../../../src/application/services/hashService';
 import { IUserRepository } from '../../../../src/application/repositories/userRepository';
 import RegisterUserUsecase from '../../../../src/application/usecases/registerUser/registerUser';
@@ -15,7 +15,7 @@ describe('Register User Usecase', () => {
   });
 
   it('should not register invalid user', async () => {
-    const params: RegisterUserRequest = {
+    const params: RegisterUserInput = {
       email: '',
       username: '',
       password: '',
@@ -41,7 +41,7 @@ describe('Register User Usecase', () => {
   it('should not register when user already exists', async () => {
     const user = createUserFactory();
     const password = user.password as Password;
-    const params: RegisterUserRequest = {
+    const params: RegisterUserInput = {
       email: user.email.email,
       username: user.username.username,
       password: password.password,
@@ -66,7 +66,7 @@ describe('Register User Usecase', () => {
     const user = createUserFactory();
     const hashedPassword = await randomBytes(30).toString();
     const password = user.password as Password;
-    const params: RegisterUserRequest = {
+    const params: RegisterUserInput = {
       email: user.email.email,
       username: user.username.username,
       password: password.password,
