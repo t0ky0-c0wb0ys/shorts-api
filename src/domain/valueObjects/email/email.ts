@@ -5,7 +5,7 @@ import RequiredPropertyError from '../../errors/requiredProperty';
 class Email {
   public readonly email: string;
 
-  private constructor(email: string) {
+  public constructor(email: string) {
     this.email = email;
   }
 

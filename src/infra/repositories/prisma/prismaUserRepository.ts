@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import User from '../../../domain/entities/user/user';
 import { IUserRepository } from '../../../application/repositories/userRepository';
+import Username from '../../../domain/entities/user/username';
+import Email from '../../../domain/valueObjects/email/email';
 
 const prisma = new PrismaClient();
 
@@ -24,15 +26,14 @@ class PrismaUserRepository implements IUserRepository {
       },
     });
 
-    return User.create(
-      newUser.username,
-      newUser.email,
-      '',
-      newUser.hashedPassword,
+    return new User(
       newUser.id,
+      new Username(newUser.username),
+      new Email(newUser.email),
+      newUser.hashedPassword,
       newUser.createdAt,
       newUser.updatedAt,
-    ) as User;
+    );
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -43,15 +44,14 @@ class PrismaUserRepository implements IUserRepository {
     });
 
     if (user) {
-      return User.create(
-        user.username,
-        user.email,
-        '',
-        user.hashedPassword,
+      return new User(
         user.id,
+        new Username(user.username),
+        new Email(user.email),
+        user.hashedPassword,
         user.createdAt,
         user.updatedAt,
-      ) as User;
+      );
     }
 
     return null;

@@ -4,7 +4,7 @@ import UsernameCantContainWhitespaceError from '../../errors/usernameCantContain
 class Username {
   public readonly username: string;
 
-  private constructor(username: string) {
+  public constructor(username: string) {
     this.username = username;
   }
 

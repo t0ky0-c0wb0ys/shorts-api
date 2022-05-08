@@ -6,6 +6,7 @@ import RegisterUserUsecase from '../../../../src/application/usecases/registerUs
 import User from '../../../../src/domain/entities/user/user';
 import AlreadyExistsError from '../../../../src/application/errors/alreadyExistsError';
 import createUserFactory from '../../../factories/createUserFactory';
+import Password from '../../../../src/domain/entities/user/password';
 
 describe('Register User Usecase', () => {
   beforeEach(() => {
@@ -38,10 +39,11 @@ describe('Register User Usecase', () => {
 
   it('should not register when user already exists', async () => {
     const user = createUserFactory();
+    const password = user.password as Password;
     const params: RegisterUserRequest = {
       email: user.email.email,
       username: user.username.username,
-      password: user.password ? user.password.password : '',
+      password: password.password,
     };
     const userRepository: IUserRepository = {
       create: jest.fn(),
@@ -62,10 +64,11 @@ describe('Register User Usecase', () => {
   it('should register user', async () => {
     const user = createUserFactory();
     const hashedPassword = await randomBytes(30).toString();
+    const password = user.password as Password;
     const params: RegisterUserRequest = {
       email: user.email.email,
       username: user.username.username,
-      password: user.password ? user.password.password : '',
+      password: password.password,
     };
     const userRepository: IUserRepository = {
       create: jest.fn(async () => user),

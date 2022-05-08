@@ -3,7 +3,7 @@ import MinLengthPasswordError from '../../errors/minLengthPasswordError';
 class Password {
   public readonly password: string;
 
-  private constructor(password: string) {
+  public constructor(password: string) {
     this.password = password;
   }
 

@@ -15,6 +15,7 @@ describe('User entity', () => {
       id: randomUUID(),
       username: faker.internet.userName(),
       email: 'invalidEmail',
+      password: faker.internet.password(8),
     };
     jest.spyOn(Email, 'create').mockReturnValue(new Error('Email error'));
     jest.spyOn(Username, 'create').mockReturnValue(new Error('Username error'));
@@ -23,6 +24,7 @@ describe('User entity', () => {
       params.id,
       params.username,
       params.email,
+      params.password,
     ) as Error;
 
     expect(error.message).toBe('Email error');
@@ -33,6 +35,7 @@ describe('User entity', () => {
       id: randomUUID(),
       username: `${faker.internet.userName()}  `,
       email: faker.internet.email(),
+      password: faker.internet.password(8),
     };
     jest.spyOn(Email, 'create').mockReturnValue(Email.create(params.email));
     jest.spyOn(Username, 'create').mockReturnValue(new Error('Username error'));
@@ -41,6 +44,7 @@ describe('User entity', () => {
       params.id,
       params.username,
       params.email,
+      params.password,
     ) as Error;
 
     expect(error.message).toBe('Username error');
@@ -94,6 +98,6 @@ describe('User entity', () => {
     expect(user).toBeInstanceOf(User);
     expect(user.username.username).toBe(params.username);
     expect(user.email.email).toBe(params.email);
-    expect(user?.password?.password).toBe(params.password);
+    expect((user.password as Password).password).toBe(params.password);
   });
 });
