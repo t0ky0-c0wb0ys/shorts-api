@@ -21,7 +21,7 @@ describe('Register User Usecase', () => {
     };
     const userRepository: IUserRepository = {
       create: jest.fn(),
-      findByEmail: jest.fn(),
+      findByEmailOrUsername: jest.fn(),
     };
     const hashService: IHashService = {
       hashPassword: jest.fn(),
@@ -47,7 +47,7 @@ describe('Register User Usecase', () => {
     };
     const userRepository: IUserRepository = {
       create: jest.fn(),
-      findByEmail: jest.fn(async () => user),
+      findByEmailOrUsername: jest.fn(async () => user),
     };
     const hashService: IHashService = {
       hashPassword: jest.fn(),
@@ -72,7 +72,7 @@ describe('Register User Usecase', () => {
     };
     const userRepository: IUserRepository = {
       create: jest.fn(async () => user),
-      findByEmail: jest.fn(),
+      findByEmailOrUsername: jest.fn(),
     };
     const hashService: IHashService = {
       hashPassword: jest.fn(async () => hashedPassword),
@@ -83,7 +83,10 @@ describe('Register User Usecase', () => {
     const response = (await registerUser.run(params)) as Error;
 
     expect(response).toBe(user);
-    expect(userRepository.findByEmail).toHaveBeenCalledWith(params.email);
+    expect(userRepository.findByEmailOrUsername).toHaveBeenCalledWith(
+      params.email,
+      params.username,
+    );
     expect(userRepository.create).toHaveBeenCalledWith(
       user.id,
       params.username,

@@ -27,7 +27,10 @@ class RegisterUserUsecase {
       return userOrError;
     }
 
-    const userAlreadyExists = await this.userRepository.findByEmail(email);
+    const userAlreadyExists = await this.userRepository.findByEmailOrUsername(
+      email,
+      username,
+    );
 
     if (userAlreadyExists) {
       return new AlreadyExistsError('User');
