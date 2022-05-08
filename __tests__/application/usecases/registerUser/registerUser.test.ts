@@ -1,4 +1,5 @@
 import { randomBytes } from 'crypto';
+import { UserDTO } from '../../../../src/application/usecases/dto/user';
 import { RegisterUserRequest } from '../../../../src/application/usecases/registerUser/registerUserRequest';
 import { IHashService } from '../../../../src/application/services/hashService';
 import { IUserRepository } from '../../../../src/application/repositories/userRepository';
@@ -80,9 +81,16 @@ describe('Register User Usecase', () => {
     jest.spyOn(User, 'create').mockImplementation(() => user);
 
     const registerUser = new RegisterUserUsecase(userRepository, hashService);
-    const response = (await registerUser.run(params)) as Error;
+    const response = await registerUser.run(params);
 
-    expect(response).toBe(user);
+    const expectedResponse: UserDTO = {
+      id: user.id,
+      username: user.username.username,
+      email: user.email.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+    expect(response).toMatchObject(expectedResponse);
     expect(userRepository.findByEmailOrUsername).toHaveBeenCalledWith(
       params.email,
       params.username,

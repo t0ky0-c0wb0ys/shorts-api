@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { UserDTO } from '../dto/user';
 import AlreadyExistsError from '../../errors/alreadyExistsError';
 import User from '../../../domain/entities/user/user';
 import { RegisterUserRequest } from './registerUserRequest';
@@ -47,7 +48,15 @@ class RegisterUserUsecase {
       new Date(),
     );
 
-    return user;
+    const userOutput: UserDTO = {
+      id: user.id,
+      username: user.username.username,
+      email: user.email.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+
+    return userOutput;
   }
 }
 
