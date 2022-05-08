@@ -5,6 +5,7 @@ import MinLengthPasswordError from '../../errors/minLengthPasswordError';
 import Email from '../../valueObjects/email/email';
 import Password from './password';
 import Username from './username';
+import RequiredPropertyError from '../../errors/requiredProperty';
 
 class User {
   public readonly id: string;
@@ -42,6 +43,7 @@ class User {
     password: string,
   ):
     | User
+    | RequiredPropertyError
     | MinLengthPasswordError
     | UsernameCantContainWhitespaceError
     | InvalidEmailError

@@ -28,7 +28,7 @@ class Username {
 
   static create(
     username: string,
-  ): UsernameCantContainWhitespaceError | Username {
+  ): UsernameCantContainWhitespaceError | Username | RequiredPropertyError {
     const validOrError = this.isValid(username);
 
     if (validOrError instanceof Error) {

@@ -1,8 +1,20 @@
 import faker from '@faker-js/faker';
+import RequiredPropertyError from '../../../../src/domain/errors/requiredProperty';
 import Password from '../../../../src/domain/entities/user/password';
 import MinLengthPasswordError from '../../../../src/domain/errors/minLengthPasswordError';
 
 describe('User entity', () => {
+  it('should not create a password when value is not provided', () => {
+    const params = {
+      password: '',
+    };
+
+    const error = Password.create(params.password) as Error;
+
+    expect(error).toBeInstanceOf(RequiredPropertyError);
+    expect(error.message).toBe(new RequiredPropertyError('password').message);
+  });
+
   it('should not create a password with too few chars', () => {
     const params = {
       password: faker.internet.password(3),

@@ -34,7 +34,7 @@ class Email {
 
   static create(
     email: string,
-  ): MaxLengthEmailError | InvalidEmailError | Email {
+  ): MaxLengthEmailError | InvalidEmailError | Email | RequiredPropertyError {
     const validOrError = this.isValid(email);
 
     if (validOrError instanceof Error) {
