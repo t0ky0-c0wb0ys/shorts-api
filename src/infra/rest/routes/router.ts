@@ -3,7 +3,7 @@ import RegisterUserController from '../../../adapters/controllers/registerUser/r
 
 const router: Router = express.Router();
 
-router.post('/users', async (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   const registerUserController = new RegisterUserController();
 
   const controllerResponse = await registerUserController.handle({
