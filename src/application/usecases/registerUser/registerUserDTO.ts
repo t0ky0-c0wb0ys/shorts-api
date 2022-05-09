@@ -5,6 +5,12 @@ import MinLengthPasswordError from '../../../domain/errors/minLengthPasswordErro
 import InvalidEmailError from '../../../domain/errors/invalidEmailError';
 import MaxLengthEmailError from '../../../domain/errors/maxLengthEmailError';
 
+export type RegisterUserInput = {
+  username: string;
+  email: string;
+  password: string;
+};
+
 export type RegisterUserOutput =
   | UserDTO
   | AlreadyExistsError

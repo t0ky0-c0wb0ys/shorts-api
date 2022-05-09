@@ -2,8 +2,7 @@ import { randomUUID } from 'crypto';
 import { UserDTO } from '../dto/user';
 import AlreadyExistsError from '../../errors/alreadyExistsError';
 import User from '../../../domain/entities/user/user';
-import { RegisterUserInput } from './registerUserInput';
-import { RegisterUserOutput } from './registerUserOutput';
+import { RegisterUserInput, RegisterUserOutput } from './registerUserDTO';
 import { IUserRepository } from '../../repositories/userRepository';
 import { IHashService } from '../../services/hashService';
 

@@ -9,5 +9,8 @@ export interface IUserRepository {
     createdAt: Date,
     updatedAt: Date,
   ): Promise<User>;
-  findByEmailOrUsername(email: string, username: string): Promise<User | null>;
+  findByEmailOrUsername(
+    email: string | undefined,
+    username: string | undefined,
+  ): Promise<User | null>;
 }

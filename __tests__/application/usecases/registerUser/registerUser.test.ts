@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
 import { UserDTO } from '../../../../src/application/usecases/dto/user';
-import { RegisterUserInput } from '../../../../src/application/usecases/registerUser/registerUserInput';
+import { RegisterUserInput } from '../../../../src/application/usecases/registerUser/registerUserDTO';
 import { IHashService } from '../../../../src/application/services/hashService';
 import { IUserRepository } from '../../../../src/application/repositories/userRepository';
 import RegisterUserUsecase from '../../../../src/application/usecases/registerUser/registerUser';
@@ -26,6 +26,7 @@ describe('Register User Usecase', () => {
     };
     const hashService: IHashService = {
       hashPassword: jest.fn(),
+      comparePassword: jest.fn(),
     };
     jest
       .spyOn(User, 'create')
@@ -52,6 +53,7 @@ describe('Register User Usecase', () => {
     };
     const hashService: IHashService = {
       hashPassword: jest.fn(),
+      comparePassword: jest.fn(),
     };
     jest.spyOn(User, 'create').mockImplementation(() => user);
 
@@ -77,6 +79,7 @@ describe('Register User Usecase', () => {
     };
     const hashService: IHashService = {
       hashPassword: jest.fn(async () => hashedPassword),
+      comparePassword: jest.fn(),
     };
     jest.spyOn(User, 'create').mockImplementation(() => user);
 
