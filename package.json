@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build",
     "start:dev": "tsnd --respawn --transpile-only --exit-child src/infra/rest/server.ts",
-    "test": "jest --watch",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage",
     "lint:fix": "npx eslint \"**/*.{ts,tsx}\" --fix",
     "build": "tsc"
   },
