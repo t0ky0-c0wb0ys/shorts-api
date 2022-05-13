@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { IJWTService } from '../../application/services/jwtService';
+import { IJWTService, Payload } from '../../application/services/jwtService';
 
 class JWTService implements IJWTService {
   private readonly secret: string;
@@ -12,7 +12,15 @@ class JWTService implements IJWTService {
     payload: { id: string },
     expiresIn: number,
   ): Promise<string> {
-    return jwt.sign(payload, this.secret, { expiresIn: `${expiresIn}d` });
+    return await jwt.sign(payload, this.secret, { expiresIn: `${expiresIn}d` });
+  }
+
+  async verifyToken(token: string): Promise<Payload | null> {
+    try {
+      return (await jwt.verify(token, this.secret)) as Payload;
+    } catch (error) {
+      return null;
+    }
   }
 }
 
