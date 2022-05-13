@@ -32,6 +32,7 @@ describe('Login Usecase', () => {
     };
     const jwtService: IJWTService = {
       generateToken: jest.fn(),
+      verifyToken: jest.fn(),
     };
 
     const login = new LoginUsecase(userRepository, hashService, jwtService);
@@ -57,6 +58,7 @@ describe('Login Usecase', () => {
     };
     const jwtService: IJWTService = {
       generateToken: jest.fn(),
+      verifyToken: jest.fn(),
     };
 
     const login = new LoginUsecase(userRepository, hashService, jwtService);
@@ -82,6 +84,7 @@ describe('Login Usecase', () => {
     };
     const jwtService: IJWTService = {
       generateToken: jest.fn(),
+      verifyToken: jest.fn(),
     };
 
     const login = new LoginUsecase(userRepository, hashService, jwtService);
@@ -109,6 +112,7 @@ describe('Login Usecase', () => {
     };
     const jwtService: IJWTService = {
       generateToken: jest.fn(),
+      verifyToken: jest.fn(),
     };
 
     const login = new LoginUsecase(userRepository, hashService, jwtService);
@@ -141,6 +145,7 @@ describe('Login Usecase', () => {
     };
     const jwtService: IJWTService = {
       generateToken: jest.fn(async () => token),
+      verifyToken: jest.fn(),
     };
 
     const login = new LoginUsecase(userRepository, hashService, jwtService);
